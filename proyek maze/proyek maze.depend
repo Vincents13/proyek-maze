@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1735444056 source:c:\c++\proyek maze\main.cpp
-	<iostream>
-	<vector>
-	<chrono>
-	<conio.h>
-
