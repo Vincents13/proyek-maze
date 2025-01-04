@@ -1,7 +1,8 @@
 #include <iostream>
-#include <vector>
-#include <chrono>
 #include <conio.h>
+#include<vector>
+#include <iomanip>
+
 using namespace std;
 
 
@@ -24,11 +25,11 @@ char mapp1[30][70] = {
     "#             ##      ###          ###                      ####K  P#",
     "########D############## ### ############### ########### ###   D  ####",
     "#               ###      ##        B    ###               #### ######",
-    "# ########### ########### ########### ##################### ## ######",
+    "# ########### ########### ########### ##################### ##      #",
     "# ###       ###                                     ###    ### ######",
-    "# ### ### ######## ################### ####################### ######",
-    "#     ### ###        ###            ###                 ###    ######",
-    "# ### ######## ######### ########## ######## ########## #### ########",
+    "# ### ### ######## ################### #######################  #####",
+    "#     ### ###        ###            ###                 ###     #####",
+    "# ### ######## ######### ########## ######## ########## #### ##     #",
     "#P###         D                ###          #       ###      ########",
     "################# ##############################################B####",
     "###                                                         #### ####",
@@ -39,6 +40,38 @@ char mapp1[30][70] = {
     "###K     ######### ##################################################",
     "################## ##################################################",
     "#      B  D                                          D             E#",
+    "#####################################################################"
+};
+char mapp2[30][70] = {
+    "#####################################################################",
+    "#1       D             #P           ###    K     D                 2#",
+    "### ########### ### ############### ### ######## ########### ### ####",
+    "#   ###K        ###       ###            ###             ###B###   K#",
+    "# ################### ######### ########### ######T##################",
+    "# ###B           ##   ##      B    ##         ###           #P   DDK#",
+    "# ############## ### ####### ###### ######### ### ######### ###### ##",
+    "# ###        ###           ###      ###       ###   K###           ##",
+    "# ### ###### #############P###### ####################### ###### ####",
+    "# ###T##P              B###               ###               ##     B#",
+    "# ### ################### ### #####D##### ###T############# ######T##",
+    "#      ###    ###            ###P   ###B              ###    ###    #",
+    "#####################################################################",
+    "#P      T        ##                P###     P###K         # ###    P#",
+    "### ###########  ## ###################T###########D#####T#####T#####",
+    "#   ###K        P##            ###            ###                ####",
+    "# ### ####################### ####### ######## ###############D######",
+    "# #               ###           ###      ###           ###          #",
+    "# # ############## ### ######## ##### ######## ########### ##########",
+    "#    B##          ###     D                 #                 #    P#",
+    "###D#########D############################# ### ################K####",
+    "#K    #     #                  ###B             ###P   D       ###  #",
+    "### ##### ### ####################### ########################P######",
+    "#   ###       ######D   K  ######### ################### ## ###   DE#",
+    "###T###############  ##### #       ### ####                  K#P#####",
+    "###     ###########   B##   ## ### ### ######## #####################",
+    "#######D###########T##### # # ###               #    ###            #",
+    "###K                ##### ### ################# ######### ########T##",
+    "#P      B         P###               D           ##P           D   P#",
     "#####################################################################"
 };
 
@@ -113,63 +146,65 @@ void penggunaanbutton (int px1,int py1,int px2,int py2,vector<vector<int>> lokas
             currentmap[lokasib[i][0]][lokasib[i][1]] = 'B';
         }
     }
-
 }
-void ambilkunci(int px1,int py1,int px2,int py2,char currentmap[30][70],int &kunci){
+void ambilkunci(int px1,int py1,int px2,int py2,char currentmap[30][70],int &kunci1,int &kunci2){
     if (currentmap [py1][px1+1]== 'K'){
         currentmap [py1][px1+1]= ' ';
-        kunci++;
+        kunci1++;
     }if (currentmap [py1][px1-1]== 'K'){
         currentmap [py1][px1-1]= ' ';
-        kunci++;
+        kunci1++;
     }if (currentmap [py1+1][px1]== 'K'){
         currentmap [py1+1][px1]= ' ';
-        kunci++;
+        kunci1++;
     }if (currentmap [py1-1][px1]== 'K'){
         currentmap [py1-1][px1]= ' ';
-        kunci++;
+        kunci1++;
     }if (currentmap [py2][px2+1]== 'K'){
         currentmap [py2][px2+1]= ' ';
-        kunci++;
+        kunci2++;
     }if (currentmap [py2][px2-1]== 'K'){
         currentmap [py2][px2-1]= ' ';
-        kunci++;
+        kunci2++;
     }if (currentmap [py2+1][px2]== 'K'){
         currentmap [py2+1][px2]= ' ';
-        kunci++;
+        kunci2++;
     }if (currentmap [py2-1][px2]== 'K'){
         currentmap [py2-1][px2]= ' ';
-        kunci++;
+        kunci2++;
     }
 }
 
-void bukapintu(int px1,int py1,int px2,int py2,char currentmap[30][70],int &kunci){
+void bukapintu1(int px1,int py1,int px2,int py2,char currentmap[30][70],int &kunci1){
     if (currentmap [py1][px1+1]== 'D'){
         currentmap [py1][px1+1]= ' ';
-        kunci--;
+        kunci1--;
     }if (currentmap [py1][px1-1]== 'D'){
         currentmap [py1][px1-1]= ' ';
-        kunci--;
+        kunci1--;
     }if (currentmap [py1+1][px1]== 'D'){
         currentmap [py1+1][px1]= ' ';
-        kunci--;
+        kunci1--;
     }if (currentmap [py1-1][px1]== 'D'){
         currentmap [py1-1][px1]= ' ';
-        kunci--;
-    }if (currentmap [py2][px2+1]== 'D'){
+        kunci1--;
+
+    }
+}
+void bukapintu2(int px1,int py1,int px2,int py2,char currentmap[30][70],int &kunci2){
+    if (currentmap [py2][px2+1]== 'D'){
         currentmap [py2][px2+1]= ' ';
-        kunci--;
+        kunci2--;
     }if (currentmap [py2][px2-1]== 'D'){
         currentmap [py2][px2-1]= ' ';
-        kunci--;
+        kunci2--;
     }if (currentmap [py2+1][px2]== 'D'){
         currentmap [py2+1][px2]= ' ';
-        kunci--;
+        kunci2--;
     }if (currentmap [py2-1][px2]== 'D'){
         currentmap [py2-1][px2]= ' ';
-        kunci--;
+        kunci2--;
     }
-
 }
 void masukportal(int &px1,int &py1,int &px2,int &py2,int portal[99][99],int jumlahportal,char currentmap[30][70]){
     for (int i=0;i<jumlahportal;i++){
@@ -215,14 +250,14 @@ void masukportal(int &px1,int &py1,int &px2,int &py2,int portal[99][99],int juml
 
 int main()
 {
-int menu;
+    int menu;
 do{
     int level,py1,px1,py2,px2;
     menuawal(menu);
     char currentmap [30][70];
     char key;
     int portal[99][99];
-    int kunci =0;
+    int kunci1 =0,kunci2=0;
     int jumlahportal;
     bool flag=true,selesai=true;
     bool playerexit1 = false,playerexit2=false;
@@ -234,9 +269,9 @@ do{
         menulvl(level);
         do{
             system("cls");
+            cout << "player 1 key: " << setw(39) << left<< kunci1 << "player 2 key: "  <<  kunci2<<endl;
             if (level == 1){
                 if (flag){
-
                     salincurrent(mapp1,currentmap);
                     printmap(currentmap);
                     px1 = 1;
@@ -249,23 +284,76 @@ do{
                     portal[1][0]=11;
                     portal[1][1]=67;
                     jumlahportal = 2;
-
                 }else {
                     if (!playerexit1){
-
                         currentmap [py1][px1]= '1';
                     }
                     if (!playerexit2){
-
                         currentmap [py2][px2]= '2';
                     }
                     printmap(currentmap);
-
                 }
             }
+             if (level == 2){
+                if (flag){
+                    salincurrent(mapp2,currentmap);
+                    printmap(currentmap);
+                    px1 = 1;
+                    py1= 1;
+                    px2 = 67;
+                    py2 = 1;
+                    flag = false;
+                    portal[0][0]=9;
+                    portal[0][1]=8;
+                    portal[1][0]=1;
+                    portal[1][1]=24;
+                    portal[2][0]=8;
+                    portal[2][1]=26;
+                    portal[3][0]=5;
+                    portal[3][1]=61;
+                    portal[4][0]=11;
+                    portal[4][1]=32;
+                    portal[5][0]=13;
+                    portal[5][1]=1;
+                    portal[6][0]=15;
+                    portal[6][1]=16;
+                    portal[7][0]=13;
+                    portal[7][1]=67;
+                    portal[8][0]=13;
+                    portal[8][1]=44;
+                    portal[9][0]=28;
+                    portal[9][1]=1;
+                    portal[10][0]=13;
+                    portal[10][1]=35;
+                    portal[11][0]=19;
+                    portal[11][1]=67;
+                    portal[12][0]=28;
+                    portal[12][1]=18;
+                    portal[13][0]=21;
+                    portal[13][1]=51;
+                    portal[14][0]=22;
+                    portal[14][1]=62;
+                    portal[15][0]=28;
+                    portal[15][1]=51;
+                    portal[16][0]=28;
+                    portal[16][1]=67;
+                    portal[17][0]=24;
+                    portal[17][1]=63;
+                    jumlahportal = 18;
+                }else {
+                    if (!playerexit1){
+                        currentmap [py1][px1]= '1';
+                    }
+                    if (!playerexit2){
+                        currentmap [py2][px2]= '2';
+                    }
+                    printmap(currentmap);
+                }
+            }
+
+
             letakb(lokasib,currentmap);
             letakT(lokasit,currentmap);
-
             key = getch();
             if (key =='w' && (currentmap[py1-1][px1]== ' ' || currentmap[py1-1][px1]== 'B'|| currentmap[py1-1][px1]== 'E'|| currentmap[py1-1][px1]== 'P')){
                 currentmap[py1][px1]=' ';
@@ -350,7 +438,6 @@ do{
                 if (currentmap[py2][px2+1]=='E'){
                     playerexit2=true;
                 }else{
-
                     px2 = px2+1;
                     penggunaanbutton (px1,py1,px2,py2,lokasib,currentmap,lokasit);
                     masukportal(px1,py1,px2,py2,portal,jumlahportal,currentmap);
@@ -358,17 +445,22 @@ do{
                 }
 
             }if (key == 'e'){
-                ambilkunci(px1,py1,px2,py2,currentmap,kunci);
-                if (kunci >0){
-                    bukapintu(px1,py1,px2,py2,currentmap,kunci);
+                ambilkunci(px1,py1,px2,py2,currentmap,kunci1,kunci2);
+                if (kunci1 >0){
+                    bukapintu1(px1,py1,px2,py2,currentmap,kunci1);
                 }
+                if (kunci2 >0){
+                    bukapintu2(px1,py1,px2,py2,currentmap,kunci2);
+                }
+            }if (key == 'x'){
+                selesai = false;
             }
             if (playerexit1 && playerexit2){
                 selesai = false;
                 cout << "anjai menang"<<endl;
                 system("pause");
             }
-        }while (selesai);
+        }while ( selesai);
     }
 
 }while (menu!=0);
