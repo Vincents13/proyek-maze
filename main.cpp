@@ -399,8 +399,10 @@ do{
                     py2 = 1;
                     flag = false;
                     portal[0][0] = 11;
-                    portal[0][1] = 21;
-                    jumlahportal = 1;
+                    portal[0][1] = 5;
+                    portal[1][0] = 21;
+                    portal[1]{1} = 64;
+                    jumlahportal = 2;
                     }
                     else {
                     if (!playerexit1){
