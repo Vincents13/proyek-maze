@@ -2,8 +2,96 @@
 #include <conio.h>
 #include<vector>
 #include <iomanip>
+#include <string>
+#include <thread>// for sleep
+#include <stdlib.h>// fpr system
 
 using namespace std;
+
+
+vector<string> rainbowColors = {
+    "\033[31m", // Red
+    "\033[33m", // Yellow
+    "\033[32m", // Green
+    "\033[36m", // Cyan
+    "\033[34m", // Blue
+    "\033[35m", // Magenta
+    "\033[0m"   // Reset
+};
+
+// Function to clear the console
+void clearConsole() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+
+// Function to print the big word "MAZE" centered on the screen
+void printBigWordCentered() {
+    vector<vector<string>> patterns = {
+        { // M
+            "*     *",
+            "**   **",
+            "* * * *",
+            "*  *  *",
+            "*     *"
+        },
+        { // A
+            "  ***  ",
+            " *   * ",
+            " ***** ",
+            " *   * ",
+            " *   * "
+        },
+        { // Z
+            " ***** ",
+            "    *  ",
+            "   *   ",
+            "  *    ",
+            " ***** "
+        },
+        { // E
+            " ***** ",
+            " *     ",
+            " ****  ",
+            " *     ",
+            " ***** "
+        }
+    };
+
+    // Assuming default console dimensions (80x24)
+    const int consoleWidth = 80;
+    const int consoleHeight = 24;
+
+    // Calculate the total width of the word "MAZE"
+    int wordWidth = 0;
+    for (const auto &pattern : patterns) {
+        wordWidth += pattern[0].size() + 1; // Add 1 space between letters
+    }
+
+    // Calculate offsets
+    int horizontalOffset = (consoleWidth - wordWidth) / 2;
+    int verticalOffset = (consoleHeight - 5) / 2; // 5 rows for the word
+
+    // Print blank lines for vertical centering
+    for (int i = 0; i < verticalOffset; ++i) {
+        cout << endl;
+    }
+
+    // Print each row of the big word
+    for (int row = 0; row < 5; ++row) { // 5 rows for each letter
+        cout << string(horizontalOffset, ' '); // Print spaces for horizontal centering
+        int colorIndex = 0;
+        for (const auto &pattern : patterns) {
+            cout << rainbowColors[colorIndex % rainbowColors.size()]
+                 << pattern[row] << " ";
+            ++colorIndex;
+        }
+        cout << rainbowColors.back() << endl; // Reset color
+    }
+}
 
 
 char mapp1[30][70] = {
@@ -288,6 +376,10 @@ void masukportal(int &px1,int &py1,int &px2,int &py2,int portal[99][99],int juml
 
 int main()
 {
+    clearConsole();
+    printBigWordCentered();
+    std::this_thread::sleep_for(std::chrono::seconds(5)); // Wait for 5 seconds
+    clearConsole();
     int menu;
 do{
     int level,py1,px1,py2,px2;
@@ -401,7 +493,7 @@ do{
                     portal[0][0] = 11;
                     portal[0][1] = 5;
                     portal[1][0] = 21;
-                    portal[1]{1} = 64;
+                    portal[1][1] = 64;
                     jumlahportal = 2;
                     }
                     else {
