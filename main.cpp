@@ -398,8 +398,9 @@ do{
                     px2 = 67;
                     py2 = 1;
                     flag = false;
-                    // tolong tambahkan fungsi portalnya di sini
-                    jumlahportal = 2;
+                    portal[0][0] = 11;
+                    portal[0][1] = 21;
+                    jumlahportal = 1;
                     }
                     else {
                     if (!playerexit1){
