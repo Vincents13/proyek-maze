@@ -4,7 +4,8 @@
 #include <iomanip>
 #include <string>
 #include <thread>// for sleep
-#include <stdlib.h>// fpr system
+#include <stdlib.h>// for system
+#include <iomanip>// gor setw
 
 using namespace std;
 
@@ -209,10 +210,11 @@ void printmap(char currentmap[30][70]) {
         cout << endl;
     }
 }
+// ACE : tulisan maze di hapus karna di ganti pakai yg gede
 void menuawal (int &menu){
-    cout << "== maze ==\n1. play\n2. Leaderboard\n0. Exit\n";
+    cout<< "                                    1. play\n                                2. Leaderboard\n                                    0. Exit\n";
     do {
-        cout << ">> ";
+        cout << "                                 >> ";
         cin >> menu;
     }while (menu < 0 || menu >2);
 
@@ -378,8 +380,6 @@ int main()
 {
     clearConsole();
     printBigWordCentered();
-    std::this_thread::sleep_for(std::chrono::seconds(5)); // Wait for 5 seconds
-    clearConsole();
     int menu;
 do{
     int level,py1,px1,py2,px2;
