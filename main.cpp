@@ -5,10 +5,14 @@
 #include <string>
 #include <thread>// for sleep
 #include <stdlib.h>// for system
-#include <iomanip>// gor setw
+#include <iomanip>// for setw
+#include <fstream>
+#include <chrono>
+#include <algorithm>
+#include <map>
 
 using namespace std;
-
+using namespace std::chrono;
 
 vector<string> rainbowColors = {
     "\033[31m", // Red
@@ -33,11 +37,11 @@ void clearConsole() {
 void printBigWordCentered() {
     vector<vector<string>> patterns = {
         { // M
-            "*     *",
-            "**   **",
-            "* * * *",
-            "*  *  *",
-            "*     *"
+            "*     * ",
+            "**   ** ",
+            "* * * * ",
+            "*  *  * ",
+            "*     * "
         },
         { // A
             "  ***  ",
@@ -212,17 +216,17 @@ void printmap(char currentmap[30][70]) {
 }
 // ACE : tulisan maze di hapus karna di ganti pakai yg gede
 void menuawal (int &menu){
-    cout<< "                                    1. play\n                                2. Leaderboard\n                                    0. Exit\n";
+    cout<< "                                1. Play\n                                2. Leaderboard\n                                0. Exit\n";
     do {
-        cout << "                                 >> ";
+        cout << "                                >> ";
         cin >> menu;
     }while (menu < 0 || menu >2);
 
 }
 void menulvl (int &level){
-    cout << "== Level ==\n1. Level 1\n2. Level 2\n3. level 3\n0. back \n";
+    cout << "                                == Level ==\n                                1. Level 1\n                                2. Level 2\n                                3. Level 3\n                                0. Back \n";
         do {
-        cout << ">> ";
+        cout << "                                >> ";
         cin >> level;
     }while (level < 0 || level >3);
 }
@@ -376,11 +380,73 @@ void masukportal(int &px1,int &py1,int &px2,int &py2,int portal[99][99],int juml
 
 }
 
+struct highscoresentry{
+    string name;
+    float time;
+};
+
+map <int, vector <highscoresentry>> highscoresperlevel;
+
+bool comparescores(const highscoresentry &a, const highscoresentry &b){
+    return a.time < b.time;
+}
+
+void savehighscores(const string &filename){
+    ofstream file(filename);
+    if(file.is_open()){
+        for(const auto &levelscores : highscoresperlevel){
+            file << "Level " << levelscores.first << ":\n";
+            for(const auto &entry : levelscores.second){
+                file << entry.name << " " << entry.time << "\n";
+            }
+            file << "\n";
+        }
+    }
+    file.close();
+}
+
+void loadhighscores(const string &filename){
+    ifstream file(filename);
+    if(file.is_open()){
+        string line;
+        while(getline(file, line)){
+            if(line.find("Level ") == 0){
+                int level = stoi(line.substr(6));
+                highscoresperlevel[level] = {};
+                while(getline(file, line) && !line.empty()){
+                    highscoresentry entry;
+                    stringstream ss(line);
+                    if(ss >> entry.name >> entry.time){
+                        highscoresperlevel[level].push_back(entry);
+                    }
+                }
+            }
+        }
+        file.close();
+    }
+}
+
+void tophighscores(int level){
+    vector <highscoresentry> &highscores = highscoresperlevel[level];
+    sort(highscores.begin(), highscores.end(), comparescores);
+    cout << "== Highscores Level " << level << " ==\n" ;
+    int count = min((int)highscores.size(), 5);
+    for(int i = 0; i < count; i++){
+        cout << i + 1 << ". " << highscores[i].name << " " << highscores[i].time << " second\n";
+    }
+    cout << "Press any key to exit\n";
+    getch();
+    system("cls");
+    printBigWordCentered();
+}
+
 int main()
 {
     clearConsole();
     printBigWordCentered();
     int menu;
+    string highscorefilename = "highscores.txt";
+    loadhighscores(highscorefilename);
 do{
     int level,py1,px1,py2,px2;
     menuawal(menu);
@@ -393,13 +459,20 @@ do{
     bool playerexit1 = false,playerexit2=false;
     vector <vector<int>> lokasib;
     vector <vector<int>> lokasit;
+    string name;
 
     if (menu == 1){
         lokasib.clear();
         menulvl(level);
+        auto start = high_resolution_clock::now();
         do{
+            if(level == 0){
+                system("cls");
+                printBigWordCentered();
+                break;
+            }
             system("cls");
-            cout << "player 1 key: " << setw(39) << left<< kunci1 << "player 2 key: "  <<  kunci2<<endl;
+            cout << "Player 1 key: " << setw(39) << left<< kunci1 << "Player 2 key: "  <<  kunci2<<endl;
             if (level == 1){
                 if (flag){
                     salincurrent(mapp1,currentmap);
@@ -506,8 +579,6 @@ do{
                     printmap(currentmap);
                 }
             }
-
-
             letakb(lokasib,currentmap);
             letakT(lokasit,currentmap);
             key = getch();
@@ -612,13 +683,45 @@ do{
                 selesai = false;
             }
             if (playerexit1 && playerexit2){
+                auto endd = high_resolution_clock::now();
                 selesai = false;
-                cout << "anjai menang"<<endl;
+                duration <float> time = endd - start;
+                cout << "Anjay menang"<<endl;
+                cout << "Player name: ";
+                cin >> name;
+                highscoresperlevel[level].push_back({name, time.count()});
+                sort(highscoresperlevel[level].begin(), highscoresperlevel[level].end(), comparescores);
+                savehighscores(highscorefilename);
                 system("pause");
             }
         }while ( selesai);
     }
+    else if(menu == 2){
+        system("cls");
+        int chooselevel;
+
+        do{
+            cout << "== Highscores ==\n 1. Level 1\n 2. Level 2\n 3. Level 3\n 0. Back\n >> ";
+            cin >> chooselevel;
+        }while(chooselevel < 0 || chooselevel > 3);
+        if(chooselevel == 0){
+            system("cls");
+            printBigWordCentered();
+            continue;
+        }
+        else if(chooselevel >= 1 && chooselevel <= 3){
+            tophighscores(chooselevel);
+            continue;
+        }
+        else{
+            system("pause");
+            system("cls");
+            printBigWordCentered();
+            continue;
+        }
+    }
 
 }while (menu!=0);
+savehighscores(highscorefilename);
     return 0;
 }

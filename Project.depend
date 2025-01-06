@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1736086922 source:c:\kuliah\semester 1\programming fundamentals\asistensi\project\main.cpp
+	<iostream>
+	<conio.h>
+	<vector>
+	<iomanip>
+	<string>
+	<thread>
+	<stdlib.h>
+	<iomanip>
+	<fstream>
+	<chrono>
+	<algorithm>
+	<map>
+
