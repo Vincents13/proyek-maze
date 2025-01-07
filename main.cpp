@@ -1,6 +1,7 @@
 #include <iostream>
+#include <windows.h>
 #include <conio.h>
-#include<vector>
+#include <vector>
 #include <iomanip>
 #include <string>
 #include <thread>// for sleep
@@ -10,6 +11,7 @@
 #include <chrono>
 #include <algorithm>
 #include <map>
+
 
 using namespace std;
 using namespace std::chrono;
@@ -216,7 +218,7 @@ void printmap(char currentmap[30][70]) {
 }
 // ACE : tulisan maze di hapus karna di ganti pakai yg gede
 void menuawal (int &menu){
-    cout<< "                                1. Play\n                                2. Leaderboard\n                                0. Exit\n";
+    cout<< rainbowColors[2] <<"                                1. Play\n                                2. Leaderboard\n                                0. Exit\n";
     do {
         cout << "                                >> ";
         cin >> menu;
@@ -224,7 +226,9 @@ void menuawal (int &menu){
 
 }
 void menulvl (int &level){
-    cout << "                                == Level ==\n                                1. Level 1\n                                2. Level 2\n                                3. Level 3\n                                0. Back \n";
+    system("cls");
+    printBigWordCentered();
+    cout << rainbowColors[2]<< "                                == Level ==\n                                1. Level 1\n                                2. Level 2\n                                3. Level 3\n                                0. Back \n";
         do {
         cout << "                                >> ";
         cin >> level;
@@ -442,6 +446,7 @@ void tophighscores(int level){
 
 int main()
 {
+
     clearConsole();
     printBigWordCentered();
     int menu;
@@ -680,6 +685,8 @@ do{
                     bukapintu2(px1,py1,px2,py2,currentmap,kunci2);
                 }
             }if (key == 'x'){
+                system("cls");
+                printBigWordCentered();
                 selesai = false;
             }
             if (playerexit1 && playerexit2){
@@ -697,11 +704,13 @@ do{
         }while ( selesai);
     }
     else if(menu == 2){
-        system("cls");
         int chooselevel;
 
         do{
-            cout << "== Highscores ==\n 1. Level 1\n 2. Level 2\n 3. Level 3\n 0. Back\n >> ";
+            // menampilkan tulisan maze besar sehabis memilih level
+            system("cls");
+            printBigWordCentered();
+            cout << rainbowColors[2]<< "                                == Highscores ==\n                                1. Level 1\n                                2. Level 2\n                                3. Level 3\n                                0. Back\n                                >> ";
             cin >> chooselevel;
         }while(chooselevel < 0 || chooselevel > 3);
         if(chooselevel == 0){
