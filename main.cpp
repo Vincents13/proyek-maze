@@ -130,7 +130,7 @@ char mapp1[30][70] = {
     "###                                                         #### ####",
     "### ####################################################### #### ####",
     "### ####           ######K#################################         #",
-    "###T#### #### #### ######T###################################### ####",
+    "###T#### ####D#### ######T###################################### ####",
     "### #### ####B####T                                              ####",
     "###K     ######### ##################################################",
     "################## ##################################################",
@@ -178,7 +178,7 @@ char mapp3[30][70] = {
     "#####################################################################",
     "#1            K                ###                  D         K    2#",
     "# ########### ################### ########### ##################### #",
-    "#             #    B         ###      ###     #         ###        ##",
+    "#             #    B         ###      ###     #         ###         #",
     "### ######### ####### #####  ### ##### ### ####### ##### ############",
     "#   ###              ###   T     ###           ###   T             ##",
     "# ##### ################################# ######## ########## #######",
@@ -206,23 +206,101 @@ char mapp3[30][70] = {
     "#          #                                                        #",
     "#####################################################################"
 };
+char maptutor1 [3][20]{
+    "###################",
+    "#1 T            B2#",
+    "###################"
+
+};
+char maptutor12 [3][20]{
+    "###################",
+    "#1              2 #",
+    "###################"
+
+};
+
+char maptutor2 [3][20]{
+    "###################",
+    "#1K           D   #",
+    "###################"
+
+};
+char maptutor22 [3][20]{
+    "###################",
+    "#1            D   #",
+    "###################"
+
+};
+char maptutor23 [3][20]{
+    "###################",
+    "#            1    #",
+    "###################"
+
+};
+char maptutor3 [3][20]{
+    "###################",
+    "#1P           #P  #",
+    "###################",
+
+};
+char maptutor32 [3][20]{
+    "###################",
+    "# P           #1  #",
+    "###################",
+
+};
+
+void printmaptutor(char currentmap[3][20]) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 20; j++) {
+            if (currentmap[i][j]== 'B'){
+                cout << rainbowColors[1]<<currentmap[i][j] << rainbowColors[6];
+            }else if (currentmap[i][j]=='T'){
+                cout << rainbowColors[5]<<currentmap[i][j] << rainbowColors[6];
+            }else if (currentmap[i][j]=='K'){
+                cout << rainbowColors[2]<<currentmap[i][j] << rainbowColors[6];
+            }else if (currentmap[i][j]=='D'){
+                cout << rainbowColors[3]<<currentmap[i][j] << rainbowColors[6];
+            }else if (currentmap[i][j]=='P'){
+                cout << rainbowColors[4]<<currentmap[i][j] << rainbowColors[6];
+            }else {
+                cout << currentmap[i][j];
+            }
+
+        }
+        cout << endl;
+    }
+}
 
 
 void printmap(char currentmap[30][70]) {
-    for (int i = 0; i < 30; ++i) {
-        for (int j = 0; j < 70; ++j) {
-            cout << currentmap[i][j];
+    for (int i = 0; i < 30; i++) {
+        for (int j = 0; j < 70; j++) {
+            if (currentmap[i][j]== 'B'){
+                cout << rainbowColors[1]<<currentmap[i][j] << rainbowColors[6];
+            }else if (currentmap[i][j]=='T'){
+                cout << rainbowColors[5]<<currentmap[i][j] << rainbowColors[6];
+            }else if (currentmap[i][j]=='K'){
+                cout << rainbowColors[2]<<currentmap[i][j] << rainbowColors[6];
+            }else if (currentmap[i][j]=='D'){
+                cout << rainbowColors[3]<<currentmap[i][j] << rainbowColors[6];
+            }else if (currentmap[i][j]=='P'){
+                cout << rainbowColors[4]<<currentmap[i][j] << rainbowColors[6];
+            }else {
+                cout << currentmap[i][j];
+            }
+
         }
         cout << endl;
     }
 }
 // ACE : tulisan maze di hapus karna di ganti pakai yg gede
 void menuawal (int &menu){
-    cout<< rainbowColors[2] <<"                                1. Play\n                                2. Leaderboard\n                                0. Exit\n";
+    cout<< rainbowColors[2] <<"                                1. Play\n                                2. Leaderboard\n                                3. Tutorial\n                                0. Exit\n";
     do {
-        cout << "                                >> ";
+        cout << "                                >> "<<rainbowColors[6];
         cin >> menu;
-    }while (menu < 0 || menu >2);
+    }while (menu < 0 || menu >3);
 
 }
 void menulvl (int &level){
@@ -230,7 +308,7 @@ void menulvl (int &level){
     printBigWordCentered();
     cout << rainbowColors[2]<< "                                == Level ==\n                                1. Level 1\n                                2. Level 2\n                                3. Level 3\n                                0. Back \n";
         do {
-        cout << "                                >> ";
+        cout << "                                >> "<<rainbowColors[6];
         cin >> level;
     }while (level < 0 || level >3);
 }
@@ -443,7 +521,14 @@ void tophighscores(int level){
     system("cls");
     printBigWordCentered();
 }
+void pesanpetunjuk (){
+    cout << "Press x to exit"<<endl;
+    cout << "Press e to interact"<<endl;
+    cout << "Press a/w/s/d to move (player 1)"<<endl;
+    cout << "Press i/j/k/l to move (player 2)"<<endl;
+    cout << "Legend:\n'#' = Wall, ' ' = Path, 'E' = Exit,'T'= gate  'B' = Button,'D' = Door,'K' = key,'P' = portal\n'1' = Entrance Player 1, '2' = Entrance Player 2"<<endl;
 
+}
 int main()
 {
     int menu;
@@ -464,8 +549,9 @@ do{
     vector <vector<int>> lokasib;
     vector <vector<int>> lokasit;
     string name;
+    int next =false;
 
-    if (menu == 1){
+if (menu == 1){
         lokasib.clear();
         menulvl(level);
         auto start = high_resolution_clock::now();
@@ -476,6 +562,7 @@ do{
                 break;
             }
             system("cls");
+
             cout << "Player 1 key: " << setw(39) << left<< kunci1 << "Player 2 key: "  <<  kunci2<<endl;
             if (level == 1){
                 if (flag){
@@ -499,6 +586,7 @@ do{
                         currentmap [py2][px2]= '2';
                     }
                     printmap(currentmap);
+                    pesanpetunjuk();
                 }
             }
              if (level == 2){
@@ -556,6 +644,7 @@ do{
                         currentmap [py2][px2]= '2';
                     }
                     printmap(currentmap);
+                    pesanpetunjuk();
                 }
             }
             if (level == 3){
@@ -585,6 +674,7 @@ do{
                         currentmap [py2][px2]= '2';
                     }
                     printmap(currentmap);
+                    pesanpetunjuk();
                 }
             }
             letakb(lokasib,currentmap);
@@ -696,7 +786,7 @@ do{
                 auto endd = high_resolution_clock::now();
                 selesai = false;
                 duration <float> time = endd - start;
-                cout << "Anjay menang"<<endl;
+                cout << "yeyyy menang"<<endl;
                 cout << "Player name: ";
                 cin >> name;
                 highscoresperlevel[level].push_back({name, time.count()});
@@ -705,7 +795,7 @@ do{
                 system("pause");
             }
         }while ( selesai);
-    }
+}
     else if(menu == 2){
         int chooselevel;
 
@@ -713,7 +803,7 @@ do{
             // menampilkan tulisan maze besar sehabis memilih level
             system("cls");
             printBigWordCentered();
-            cout << rainbowColors[2]<< "                                == Highscores ==\n                                1. Level 1\n                                2. Level 2\n                                3. Level 3\n                                0. Back\n                                >> ";
+            cout << rainbowColors[2]<< "                                == Highscores ==\n                                1. Level 1\n                                2. Level 2\n                                3. Level 3\n                                0. Back\n                                >> "<< rainbowColors[6];
             cin >> chooselevel;
         }while(chooselevel < 0 || chooselevel > 3);
         if(chooselevel == 0){
@@ -731,8 +821,111 @@ do{
             printBigWordCentered();
             continue;
         }
-    }
+    }else if (menu == 3) {
+    next = false;
+    do {
+        system("cls");
+        cout << "stand on the button (B) to open the gate(T)"<<endl;
+        printmaptutor(maptutor1);
+        cout << "Press 'n' to continue the tutorial" << endl;
+        Sleep(1000);
 
+        if (kbhit()) {
+            char key = getch();
+            if (key == 'n' || key == 'N') {
+                next = true;
+                continue;
+            }
+        }
+
+        system("cls");
+        cout << "stand on the button (B) to open the gate(T)"<<endl;
+        printmaptutor(maptutor12);
+        cout << "Press 'n' to continue the tutorial" << endl;
+        Sleep(1000);
+
+        if (kbhit()) {
+            char key = getch();
+            if (key == 'n' || key == 'N') {
+                next = true;
+            }
+        }
+    } while (!next);
+
+    next = false;
+    do {
+        system("cls");
+        cout << "press \"e\" to take the key (K) and press \"e\" to use the key to open the door(D)"<<endl;
+        printmaptutor(maptutor2);
+        cout << "Press 'n' to continue the tutorial" << endl;
+        Sleep(1000);
+
+        if (kbhit()) {
+            char key = getch();
+            if (key == 'n' || key == 'N') {
+                next = true;
+                continue;
+            }
+        }
+
+        system("cls");
+        cout << "press \"e\" to take the key (K) and press \"e\" to use the key to open the door(D)"<<endl;
+        printmaptutor(maptutor22);
+        cout << "Press 'n' to continue the tutorial" << endl;
+        Sleep(1000);
+
+        if (kbhit()) {
+            char key = getch();
+            if (key == 'n' || key == 'N') {
+                next = true;
+                continue;
+            }
+        }
+
+        system("cls");
+        cout << "press \"e\" to take the key (K) and press \"e\" to use the key to open the door(D)"<<endl;
+        printmaptutor(maptutor23);
+        cout << "Press 'n' to continue the tutorial" << endl;
+        Sleep(1000);
+
+        if (kbhit()) {
+            char key = getch();
+            if (key == 'n' || key == 'N') {
+                next = true;
+            }
+        }
+    } while (!next);
+
+    next = false;
+    do {
+        system("cls");
+        cout << "walking into a portal (P) will teleport you to the other side of the portal(P)"<<endl;
+        printmaptutor(maptutor3);
+        cout << "Press 'n' to end the tutorial" << endl;
+        Sleep(1000);
+
+        if (kbhit()) {
+            char key = getch();
+            if (key == 'n' || key == 'N') {
+                next = true;
+                continue;
+            }
+        }
+
+        system("cls");
+        cout << "walking into a portal (P) will teleport you to the other side of the portal(P)"<<endl;
+        printmaptutor(maptutor32);
+        cout << "Press 'n' to end the tutorial" << endl;
+        Sleep(1000);
+
+        if (kbhit()) {
+            char key = getch();
+            if (key == 'n' || key == 'N') {
+                next = true;
+            }
+        }
+    } while (!next);
+    }
 }while (menu!=0);
 savehighscores(highscorefilename);
     return 0;

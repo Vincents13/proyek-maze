@@ -5,3 +5,18 @@
 	<chrono>
 	<conio.h>
 
+1736416982 source:c:\c++\proyek maze ko yoga\8125\proyek-maze\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<vector>
+	<iomanip>
+	<string>
+	<thread>
+	<stdlib.h>
+	<iomanip>
+	<fstream>
+	<chrono>
+	<algorithm>
+	<map>
+
